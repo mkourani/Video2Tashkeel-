@@ -8,11 +8,18 @@ from utils.gemini_api import transcribe_with_gemini
 from utils.helpers import save_text_to_file
 
 def show_transcribe_tool():
+def show_transcribe_tool():
     """عرض أداة التفريغ النصي"""
     
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown('<div class="card-title">📝 التفريغ النصي</div>', unsafe_allow_html=True)
     
+    # التحقق من وجود مفتاح المستخدم
+    if 'user_gemini' not in st.session_state or not st.session_state.user_gemini:
+        st.warning("⚠️ الرجاء إدخال مفتاح Google Gemini في الشريط الجانبي أولاً")
+        st.markdown('</div>', unsafe_allow_html=True)
+        return
+
     # رفع ملف صوتي
     uploaded_file = st.file_uploader(
         "رفع ملف صوتي",
