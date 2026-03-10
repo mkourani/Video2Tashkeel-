@@ -7,16 +7,17 @@ import streamlit as st
 import streamlit.components.v1 as components
 from datetime import datetime
 
-# Add this at the top of utils/helpers.py, after imports
-
+# ========================================
+# دوال الإعدادات (المفقودة!)
+# ========================================
 def load_config():
-    """Simple config loader that returns empty dict (no file storage on cloud)"""
+    """Simple config loader - returns empty dict (no file storage on cloud)"""
     return {}
 
 def save_config(config):
-    """Simple config saver that does nothing (no file storage on cloud)"""
+    """Simple config saver - does nothing (no file storage on cloud)"""
     pass
-    
+
 # ========================================
 # دوال النسخ
 # ========================================
