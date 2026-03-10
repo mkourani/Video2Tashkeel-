@@ -1,19 +1,29 @@
 """
-دوال الاتصال بـ DeepSeek API
+دوال الاتصال بـ DeepSeek API - نسخة المستخدم (للكلود)
 """
 
+import streamlit as st
 import requests
 import json
-import streamlit as st
+
+# ========================================
+# الحصول على مفتاح المستخدم
+# ========================================
+def get_deepseek_key():
+    """Get DeepSeek API key from session state (user input)"""
+    if 'user_deepseek' in st.session_state and st.session_state.user_deepseek:
+        return st.session_state.user_deepseek
+    return None
 
 # ========================================
 # دوال الترجمة
 # ========================================
 def translate_with_deepseek(text, source_lang, target_lang, model="deepseek-chat"):
-    """الترجمة باستخدام DeepSeek"""
+    """الترجمة باستخدام DeepSeek - مع مفتاح المستخدم"""
     
-    if not st.session_state.api_key_deepseek:
-        st.error("❌ مفتاح DeepSeek غير موجود")
+    api_key = get_deepseek_key()
+    if not api_key:
+        st.error("❌ الرجاء إدخال مفتاح DeepSeek في الشريط الجانبي")
         return None
     
     url = "https://api.deepseek.com/v1/chat/completions"
@@ -30,7 +40,7 @@ def translate_with_deepseek(text, source_lang, target_lang, model="deepseek-chat
     
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {st.session_state.api_key_deepseek}"
+        "Authorization": f"Bearer {api_key}"
     }
     
     prompt = f"""
@@ -56,10 +66,10 @@ def translate_with_deepseek(text, source_lang, target_lang, model="deepseek-chat
             result = response.json()
             return result['choices'][0]['message']['content']
         else:
-            st.error(f"DeepSeek error: {response.status_code}")
+            st.error(f"❌ خطأ DeepSeek: {response.status_code}")
             return None
     except Exception as e:
-        st.error(f"Error: {str(e)}")
+        st.error(f"❌ خطأ في الاتصال: {str(e)}")
         return None
 
 # ========================================
@@ -68,15 +78,16 @@ def translate_with_deepseek(text, source_lang, target_lang, model="deepseek-chat
 def add_tashkeel_with_deepseek(text, level="كامل", model="deepseek-chat"):
     """إضافة التشكيل باستخدام DeepSeek"""
     
-    if not st.session_state.api_key_deepseek:
-        st.error("❌ مفتاح DeepSeek غير موجود")
+    api_key = get_deepseek_key()
+    if not api_key:
+        st.error("❌ الرجاء إدخال مفتاح DeepSeek في الشريط الجانبي")
         return None
     
     url = "https://api.deepseek.com/v1/chat/completions"
     
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {st.session_state.api_key_deepseek}"
+        "Authorization": f"Bearer {api_key}"
     }
     
     level_desc = {
@@ -110,8 +121,8 @@ def add_tashkeel_with_deepseek(text, level="كامل", model="deepseek-chat"):
             result = response.json()
             return result['choices'][0]['message']['content']
         else:
-            st.error(f"DeepSeek error: {response.status_code}")
+            st.error(f"❌ خطأ DeepSeek: {response.status_code}")
             return None
     except Exception as e:
-        st.error(f"Error: {str(e)}")
+        st.error(f"❌ خطأ في الاتصال: {str(e)}")
         return None
