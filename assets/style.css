@@ -1,0 +1,344 @@
+/* ========================================
+   الألوان الرئيسية
+   ======================================== */
+:root {
+    --primary-blue: #5380C2;
+    --bg-dark: #2D2D2A;
+    --card-dark: #3D3D3A;
+    --border-dark: #4D4D4A;
+    --text-light: #FFFFFF;
+    --text-dim: #CCCCCC;
+    --success-green: #2E7D32;
+    --warning-yellow: #FFA000;
+    --error-red: #C62828;
+}
+
+/* ========================================
+   الخطوط
+   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Cairo+Play:wght@700&display=swap');
+
+* {
+    font-family: 'Tajawal', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   الخلفية الرئيسية
+   ======================================== */
+.stApp {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    direction: rtl;
+}
+
+/* ========================================
+   العنوان الرئيسي
+   ======================================== */
+.main-title {
+    font-family: 'Cairo Play', cursive;
+    font-size: 3.5rem;
+    color: var(--primary-blue);
+    text-align: center;
+    margin-bottom: 0.2rem;
+    line-height: 1.2;
+}
+
+.main-subtitle {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+}
+
+/* ========================================
+   أزرار المراحل (Stage Navigation)
+   ======================================== */
+.stage-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.stage-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 1rem 0.5rem;
+    background-color: var(--card-dark);
+    border: 2px solid var(--border-dark);
+    border-radius: 8px;
+    color: var(--text-dim);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.stage-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--text-light);
+}
+
+.stage-btn.active {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: white;
+    font-weight: 700;
+}
+
+.stage-btn.completed {
+    background-color: var(--success-green);
+    border-color: var(--success-green);
+    color: white;
+}
+
+/* ========================================
+   البطاقات (Cards)
+   ======================================== */
+.card {
+    background-color: var(--card-dark);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 1rem 0;
+    border: 1px solid var(--border-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card-title {
+    color: var(--primary-blue);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary-blue);
+    padding-bottom: 0.5rem;
+}
+
+/* ========================================
+   مؤشر الموقع (Location Indicator)
+   ======================================== */
+.location-indicator {
+    background-color: var(--card-dark);
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    color: var(--primary-blue);
+    font-weight: 500;
+    border-right: 4px solid var(--primary-blue);
+    font-size: 1.1rem;
+}
+
+/* ========================================
+   صناديق النصوص
+   ======================================== */
+.stTextArea textarea {
+    background-color: var(--bg-dark) !important;
+    color: var(--text-light) !important;
+    border: 1px solid var(--border-dark) !important;
+    border-radius: 4px !important;
+    font-size: 1.2rem !important;
+    line-height: 1.8 !important;
+    padding: 1rem !important;
+    direction: rtl !important;
+}
+
+.stTextArea textarea:focus {
+    border-color: var(--primary-blue) !important;
+    box-shadow: 0 0 0 2px rgba(83, 128, 194, 0.2) !important;
+}
+
+/* ========================================
+   النص الناتج (Output)
+   ======================================== */
+.output-box {
+    background-color: var(--bg-dark);
+    padding: 1.5rem;
+    border-radius: 4px;
+    border: 2px solid var(--primary-blue);
+    color: var(--text-light);
+    font-size: 1.3rem;
+    line-height: 2;
+    min-height: 150px;
+    margin: 1rem 0;
+    direction: rtl;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ========================================
+   أزرار التشكيل (Checkboxes)
+   ======================================== */
+.diacritic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.diacritic-item {
+    background-color: var(--bg-dark);
+    padding: 0.8rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-dark);
+}
+
+.diacritic-item label {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.diacritic-item input[type="checkbox"] {
+    margin-left: 0.8rem;
+    transform: scale(1.2);
+    accent-color: var(--primary-blue);
+}
+
+/* ========================================
+   الأزرار العامة
+   ======================================== */
+.stButton button {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.stButton button:hover {
+    background-color: #3A5A8C;
+    box-shadow: 0 2px 8px rgba(83, 128, 194, 0.4);
+}
+
+/* ========================================
+   أزرار ثانوية
+   ======================================== */
+.secondary-btn button {
+    background-color: var(--card-dark);
+    border: 1px solid var(--border-dark);
+}
+
+.secondary-btn button:hover {
+    border-color: var(--primary-blue);
+    background-color: var(--card-dark);
+}
+
+/* ========================================
+   صناديق التنبيه
+   ======================================== */
+.success-box {
+    background-color: #1E3A2E;
+    border: 2px solid var(--success-green);
+    color: var(--text-light);
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+.warning-box {
+    background-color: #5F4A1E;
+    border: 2px solid var(--warning-yellow);
+    color: var(--text-light);
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+.error-box {
+    background-color: #4A1E1E;
+    border: 2px solid var(--error-red);
+    color: var(--text-light);
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+/* ========================================
+   مؤشرات المراحل (Stage Indicators)
+   ======================================== */
+.stage-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.3rem;
+    margin: 1rem 0;
+}
+
+.stage-item {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.stage-active {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.stage-completed {
+    background-color: var(--success-green);
+    color: white;
+}
+
+.stage-inactive {
+    background-color: var(--border-dark);
+    color: var(--text-dim);
+}
+
+/* ========================================
+   تنسيقات إضافية
+   ======================================== */
+hr {
+    border-color: var(--border-dark);
+    margin: 1.5rem 0;
+}
+
+.stAudio {
+    margin: 1rem 0;
+    direction: ltr;
+}
+
+a {
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================
+   تحسينات للشاشات الصغيرة
+   ======================================== */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .stage-nav {
+        flex-direction: column;
+    }
+    
+    .stage-btn {
+        width: 100%;
+    }
+    
+    .diacritic-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+}
