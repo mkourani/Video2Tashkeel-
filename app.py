@@ -7,7 +7,7 @@ if not streamlit.runtime.runtime.Runtime.exists():
     sys.exit(streamlit.web.cli.main())
 # End shim
 
-# app.py - Video2Tashkeel (بدون زر الرئيسية)
+# app.py - Video2Tashkeel (نسخة الكلود - المستخدم يدخل المفاتيح)
 import streamlit as st
 import os
 
@@ -44,11 +44,8 @@ except:
 # ========================================
 if 'current_tool' not in st.session_state:
     st.session_state.current_tool = 'video'  # نبدأ بالفيديو مباشرة
-if 'api_key_gemini' not in st.session_state:
-    config = load_config()
-    st.session_state.api_key_gemini = config.get('api_key_gemini', '')
-if 'api_key_deepseek' not in st.session_state:
-    st.session_state.api_key_deepseek = config.get('api_key_deepseek', '')
+# ❌ NO LONGER loading API keys from config.json
+# Users will enter them manually in the sidebar
 
 # ========================================
 # العنوان الرئيسي
@@ -57,7 +54,7 @@ st.markdown('<div class="main-title">🕌 تشكيل</div>', unsafe_allow_html=T
 st.markdown('<div class="main-subtitle">منظومة التفريغ والترجمة والتشكيل الآلي</div>', unsafe_allow_html=True)
 
 # ========================================
-# شريط الأدوات العلوي (بدون زر الرئيسية)
+# شريط الأدوات العلوي
 # ========================================
 tools = {
     "🎬 فيديو←صوت": "video",
@@ -90,38 +87,41 @@ elif st.session_state.current_tool == 'tashkeel':
     show_tashkeel_tool()
 
 # ========================================
-# إعدادات API في الشريط الجانبي (بدلاً من صفحة منفصلة)
+# إعدادات API في الشريط الجانبي (للمستخدم)
 # ========================================
 with st.sidebar:
-    st.markdown("### ⚙️ الإعدادات")
+    st.markdown("### 🔑 مفاتيح API")
+    st.markdown("*أدخل مفاتيحك الخاصة لاستخدام التطبيق*")
     
-    with st.expander("🔑 Google Gemini"):
-        gemini_key = st.text_input(
-            "مفتاح API",
-            value=st.session_state.api_key_gemini,
-            type="password",
-            key="gemini_sidebar"
-        )
-        if gemini_key != st.session_state.api_key_gemini:
-            st.session_state.api_key_gemini = gemini_key
-            save_config({'api_key_gemini': gemini_key, 'api_key_deepseek': st.session_state.api_key_deepseek})
-            st.success("✅ تم الحفظ")
+    # Google Gemini - User enters their own key
+    user_gemini = st.text_input(
+        "🔵 Google Gemini",
+        type="password",
+        placeholder="أدخل مفتاح Google Gemini",
+        key="user_gemini_input",
+        help="لن يتم حفظ هذا المفتاح - أدخله كل مرة تستخدم فيها التطبيق"
+    )
     
-    with st.expander("🔑 DeepSeek"):
-        deepseek_key = st.text_input(
-            "مفتاح API",
-            value=st.session_state.api_key_deepseek,
-            type="password",
-            key="deepseek_sidebar"
-        )
-        if deepseek_key != st.session_state.api_key_deepseek:
-            st.session_state.api_key_deepseek = deepseek_key
-            save_config({'api_key_gemini': st.session_state.api_key_gemini, 'api_key_deepseek': deepseek_key})
-            st.success("✅ تم الحفظ")
+    # DeepSeek - User enters their own key
+    user_deepseek = st.text_input(
+        "⚪ DeepSeek",
+        type="password",
+        placeholder="أدخل مفتاح DeepSeek",
+        key="user_deepseek_input",
+        help="لن يتم حفظ هذا المفتاح - أدخله كل مرة تستخدم فيها التطبيق"
+    )
     
-    with st.expander("🎬 FFmpeg"):
-        ffmpeg_path = os.path.join(os.getcwd(), 'ffmpeg', 'ffmpeg.exe')
-        if os.path.exists(ffmpeg_path):
-            st.success("✅ FFmpeg موجود")
-        else:
-            st.error("❌ FFmpeg غير موجود")
+    # Store in session state for the app to use
+    if user_gemini:
+        st.session_state.user_gemini = user_gemini
+        st.success("✅ تم إدخال مفتاح Google Gemini")
+    
+    if user_deepseek:
+        st.session_state.user_deepseek = user_deepseek
+        st.success("✅ تم إدخال مفتاح DeepSeek")
+    
+    st.markdown("---")
+    
+    # FFmpeg check (optional)
+    with st.expander("🎬 معلومات FFmpeg"):
+        st.markdown("في النسخة السحابية، FFmpeg مثبت تلقائياً")
