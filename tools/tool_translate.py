@@ -93,23 +93,25 @@ def show_translate_tool():
         source_lang = source_langs[0]
         target_lang = target_langs[0]
         
+        # التحقق من وجود المفتاح المناسب
+        if api_choice == "Google Gemini":
+            if 'user_gemini' not in st.session_state or not st.session_state.user_gemini:
+                st.error("❌ الرجاء إدخال مفتاح Google Gemini في الشريط الجانبي")
+                return
+        else:  # DeepSeek
+            if 'user_deepseek' not in st.session_state or not st.session_state.user_deepseek:
+                st.error("❌ الرجاء إدخال مفتاح DeepSeek في الشريط الجانبي")
+                return
+        
         with st.spinner(f"جاري الترجمة باستخدام {api_choice}..."):
             
             if api_choice == "Google Gemini":
-                if not st.session_state.api_key_gemini:
-                    st.error("❌ مفتاح Google Gemini غير موجود. الرجاء إدخاله في الشريط الجانبي")
-                    return
-                
                 result = translate_with_gemini(
                     text_input,
                     source_lang,
                     target_lang
                 )
             else:  # DeepSeek
-                if not st.session_state.api_key_deepseek:
-                    st.error("❌ مفتاح DeepSeek غير موجود. الرجاء إدخاله في الشريط الجانبي")
-                    return
-                
                 result = translate_with_deepseek(
                     text_input,
                     source_lang,
@@ -132,7 +134,6 @@ def show_translate_tool():
                         st.success(f"✅ تم الحفظ في {os.path.basename(filepath)}")
                 
                 with col2:
-                    # زر النسخ الجديد الذي يعمل
                     add_copy_button(result, "📋 نسخ", key=f"copy_translate_{datetime.now().timestamp()}")
     
     st.markdown('</div>', unsafe_allow_html=True)
