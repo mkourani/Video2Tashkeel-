@@ -17,8 +17,6 @@ from tools.tool_transcribe import show_transcribe_tool
 from tools.tool_translate import show_translate_tool
 from tools.tool_tashkeel import show_tashkeel_tool
 
-# استيراد الدوال المساعدة
-from utils.helpers import load_config, save_config
 
 # ========================================
 # إعدادات الصفحة
@@ -125,3 +123,4 @@ with st.sidebar:
     # FFmpeg check (optional)
     with st.expander("🎬 معلومات FFmpeg"):
         st.markdown("في النسخة السحابية، FFmpeg مثبت تلقائياً")
+
