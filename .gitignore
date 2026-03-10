@@ -1,0 +1,20 @@
+# Secrets and keys
+config.json
+.env
+*.key
+secrets.*
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Large folders you don't want to upload
+env/
+ffmpeg/
+output/
+temp/
+
+# Local files
+*.bat
+*.exe
+*.zip
