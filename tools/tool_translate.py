@@ -15,6 +15,15 @@ def show_translate_tool():
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown('<div class="card-title">🌐 الترجمة</div>', unsafe_allow_html=True)
     
+    # التحقق من وجود مفاتيح API في الشريط الجانبي
+    has_gemini = 'user_gemini' in st.session_state and st.session_state.user_gemini
+    has_deepseek = 'user_deepseek' in st.session_state and st.session_state.user_deepseek
+    
+    if not has_gemini and not has_deepseek:
+        st.warning("⚠️ الرجاء إدخال مفتاح API واحد على الأقل في الشريط الجانبي")
+        st.markdown('</div>', unsafe_allow_html=True)
+        return
+    
     # إدخال النص
     text_input = st.text_area(
         "📝 النص المراد ترجمته",
@@ -27,13 +36,27 @@ def show_translate_tool():
     
     # اختيار API (راديو بوتون)
     st.markdown("### 🤖 اختر API")
-    api_choice = st.radio(
-        " ",
-        ["Google Gemini", "DeepSeek"],
-        horizontal=True,
-        label_visibility="collapsed",
-        key="api_choice"
-    )
+    
+    # تحديد الخيارات المتاحة بناءً على المفاتيح المدخلة
+    api_options = []
+    if has_gemini:
+        api_options.append("Google Gemini")
+    if has_deepseek:
+        api_options.append("DeepSeek")
+    
+    if len(api_options) == 1:
+        # إذا كان هناك خيار واحد فقط، استخدمه تلقائياً
+        api_choice = api_options[0]
+        st.info(f"سيتم استخدام {api_choice}")
+    else:
+        # إذا كان هناك خياران، دع المستخدم يختار
+        api_choice = st.radio(
+            " ",
+            api_options,
+            horizontal=True,
+            label_visibility="collapsed",
+            key="api_choice"
+        )
     
     st.markdown("---")
     
@@ -96,11 +119,11 @@ def show_translate_tool():
         # التحقق من وجود المفتاح المناسب
         if api_choice == "Google Gemini":
             if 'user_gemini' not in st.session_state or not st.session_state.user_gemini:
-                st.error("❌ الرجاء إدخال مفتاح Google Gemini في الشريط الجانبي")
+                st.error("❌ مفتاح Google Gemini غير موجود. الرجاء إدخاله في الشريط الجانبي")
                 return
         else:  # DeepSeek
             if 'user_deepseek' not in st.session_state or not st.session_state.user_deepseek:
-                st.error("❌ الرجاء إدخال مفتاح DeepSeek في الشريط الجانبي")
+                st.error("❌ مفتاح DeepSeek غير موجود. الرجاء إدخاله في الشريط الجانبي")
                 return
         
         with st.spinner(f"جاري الترجمة باستخدام {api_choice}..."):
